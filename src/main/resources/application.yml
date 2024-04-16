@@ -1,11 +1,11 @@
 spring:
   application:
-    name: supermaket
+    name: supermarket
   datasource:
     driver-class-name: org.h2.Driver
-    username: a
-    password: a
-    url: "jdbc:h2:mem:supermaket;DB_CLOSE_ON_EXIT=FALSE"
+    username: sa
+    password: 1
+    url: "jdbc:h2:mem:supermarket;DB_CLOSE_ON_EXIT=FALSE"
   h2:
     console:
       enabled: true
@@ -16,3 +16,7 @@ spring:
     defer-datasource-initialization: true
     hibernate:
       ddl-auto: create-drop
+
+springdoc:
+  api-docs:
+    path: /api-docs
