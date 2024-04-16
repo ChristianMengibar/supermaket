@@ -23,5 +23,4 @@ public class ProductController {
     public Product createProduct(@RequestBody ProductInDTO productInDTO) {
         return this.productService.createProduct(productInDTO);
     }
-
 }
