@@ -27,4 +27,9 @@ public class CategoryService {
     public List<Category> findAll(){
         return this.categoryRepository.findAll();
     }
+
+    public void deleteCategory(CategoryInDTO categoryInDTO){
+        Category category = mapper.map(categoryInDTO);
+        this.categoryRepository.delete(category);
+    }
 }

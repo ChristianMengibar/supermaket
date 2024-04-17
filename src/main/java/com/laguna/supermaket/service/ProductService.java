@@ -31,4 +31,9 @@ public class ProductService {
     public List<Product> findAll(){
         return this.productRepository.findAll();
     }
+
+    public void deleteProduct(ProductInDTO productInDTO) {
+        Product product = mapper.map(productInDTO);
+        this.productRepository.delete(product);
+    }
 }

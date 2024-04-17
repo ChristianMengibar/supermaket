@@ -3,6 +3,8 @@ package com.laguna.supermaket.controller;
 import com.laguna.supermaket.persistence.entity.Product;
 import com.laguna.supermaket.service.ProductService;
 import com.laguna.supermaket.service.dto.ProductInDTO;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,4 +30,16 @@ public class ProductController {
         return this.productService.findAll();
     }
 
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteProduct(@RequestBody ProductInDTO productInDTO) {
+        //Utilizamos el try catch para ver si hay algun problema al eliminar el producto que nos
+        //muestre el mensaje de si se ha eliminado o si no se ha eliminado por algun error.
+        try {
+            this.productService.deleteProduct(productInDTO);
+            return ResponseEntity.ok("Product borrado");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("ERROR al borrar el producto: " + e.getMessage());
+        }
+    }
 }
