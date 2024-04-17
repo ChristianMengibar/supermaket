@@ -6,6 +6,8 @@ import com.laguna.supermaket.persistence.repository.CategoryRepository;
 import com.laguna.supermaket.service.dto.CategoryInDTO;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CategoryService {
     private final CategoryRepository categoryRepository;
@@ -20,5 +22,9 @@ public class CategoryService {
     public Category createCategory(CategoryInDTO categoryInDTO) {
         Category category = mapper.map(categoryInDTO);
         return this.categoryRepository.save(category);
+    }
+
+    public List<Category> findAll(){
+        return this.categoryRepository.findAll();
     }
 }

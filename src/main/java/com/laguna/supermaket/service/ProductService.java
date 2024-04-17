@@ -6,10 +6,13 @@ import com.laguna.supermaket.persistence.repository.ProductRepository;
 import com.laguna.supermaket.service.dto.ProductInDTO;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProductService {
 
     private final ProductRepository productRepository;
+
     //Para usar el mapper lo identamos en la clase.
     private final ProductInDTOToTask mapper;
 
@@ -23,5 +26,9 @@ public class ProductService {
         //Objeto ProductInDTO mapeado a product.
         Product product = mapper.map(productInDTO);
         return this.productRepository.save(product);
+    }
+
+    public List<Product> findAll(){
+        return this.productRepository.findAll();
     }
 }
