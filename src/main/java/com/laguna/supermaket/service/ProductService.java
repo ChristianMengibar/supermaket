@@ -46,8 +46,26 @@ public class ProductService {
 
     public void stockOneDown(Long id, double changeStock) {
         Product product = productRepository.findById(id)
+                //permite lanzar una excepción con un mensaje personalizado cuando ocurre
+                // una condición inesperada o no válida dentro de un método.
                 .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado."));
+
         double updatedStock = product.getStock() + changeStock;
+
+        if (updatedStock < 0) {
+            throw new IllegalArgumentException("El stock no puede ser negativo.");
+        }
+
+        product.setStock(updatedStock);
+        productRepository.save(product);
+    }
+
+    public void stockModify(Long id, double changeStock) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado."));
+
+        double currentStock = product.getStock();
+        double updatedStock = currentStock + changeStock;
 
         if (updatedStock < 0) {
             throw new IllegalArgumentException("El stock no puede ser negativo.");
