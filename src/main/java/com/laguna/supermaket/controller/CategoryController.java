@@ -3,7 +3,6 @@ package com.laguna.supermaket.controller;
 import com.laguna.supermaket.persistence.entity.Category;
 import com.laguna.supermaket.service.CategoryService;
 import com.laguna.supermaket.service.dto.CategoryInDTO;
-import com.laguna.supermaket.service.dto.ProductInDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +37,18 @@ public class CategoryController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("ERROR al borrar la categoria: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<String> updateCategory(@PathVariable Long id,
+                                                 @RequestBody CategoryInDTO categoryInDTO) {
+        try {
+            this.categoryService.updateCategory(id, categoryInDTO);
+            return ResponseEntity.ok("Categoria borrada");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("ERROR al actualizar la categoria: " + e.getMessage());
         }
     }
 }

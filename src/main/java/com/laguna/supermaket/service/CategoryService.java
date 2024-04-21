@@ -32,4 +32,9 @@ public class CategoryService {
         Category category = mapper.map(categoryInDTO);
         this.categoryRepository.delete(category);
     }
+
+    public void updateCategory(Long id, CategoryInDTO categoryInDTO){
+        Category category = mapper.map(categoryInDTO);
+        this.categoryRepository.save(category);
+    }
 }

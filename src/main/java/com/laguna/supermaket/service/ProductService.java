@@ -28,12 +28,32 @@ public class ProductService {
         return this.productRepository.save(product);
     }
 
-    public List<Product> findAll(){
+    public List<Product> findAll() {
         return this.productRepository.findAll();
     }
 
     public void deleteProduct(ProductInDTO productInDTO) {
         Product product = mapper.map(productInDTO);
         this.productRepository.delete(product);
+    }
+
+    //public Product updateProduct
+    public void updateProduct(ProductInDTO productInDTO) {
+        Product product = mapper.map(productInDTO);
+        this.productRepository.save(product);
+        //return this.
+    }
+
+    public void stockOneDown(Long id, double changeStock) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado."));
+        double updatedStock = product.getStock() + changeStock;
+
+        if (updatedStock < 0) {
+            throw new IllegalArgumentException("El stock no puede ser negativo.");
+        }
+
+        product.setStock(updatedStock);
+        productRepository.save(product);
     }
 }

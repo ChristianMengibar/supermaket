@@ -26,7 +26,7 @@ public class ProductController {
     }
 
     @GetMapping("/all")
-    public List<Product> findAll(){
+    public List<Product> findAll() {
         return this.productService.findAll();
     }
 
@@ -40,6 +40,33 @@ public class ProductController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("ERROR al borrar el producto: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<String> updateProduct(@PathVariable Long id,
+                                                @RequestBody ProductInDTO productInDTO) {
+        try {
+            productInDTO.setId(id);
+            this.productService.updateProduct(productInDTO);
+            return ResponseEntity.ok("Producto actualizado");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al actualizar el producto: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/stockOneDown/{id}")
+    public ResponseEntity<String> stockOneDownProduct(@PathVariable Long id,
+                                                      @PathVariable double changeStock) {
+        try {
+            productService.stockOneDown(id, changeStock);
+            return ResponseEntity.ok("Stock cambiado correctamente.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al cambiar el stock " + e.getMessage());
         }
     }
 }
