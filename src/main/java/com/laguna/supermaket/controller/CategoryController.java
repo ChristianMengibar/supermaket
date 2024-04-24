@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/category")
@@ -27,6 +28,13 @@ public class CategoryController {
     @GetMapping("/all")
     public List<Category> findAll(){
         return this.categoryService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Category> findByCategoryId(@PathVariable Long id) {
+        Optional<Category> category = categoryService.findByCategoryId(id);
+
+        return category.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/delete")

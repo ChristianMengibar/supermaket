@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 //Camino hacia el controlador
@@ -25,9 +26,16 @@ public class ProductController {
         return this.productService.createProduct(productInDTO);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/all") //Buscar todos los productos
     public List<Product> findAll() {
         return this.productService.findAll();
+    }
+
+    @GetMapping("/{id}")//Buscar un producto
+    public ResponseEntity<Product> findProductById(@PathVariable Long id) {
+        Optional<Product> product = productService.findProductById(id);
+
+        return product.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/delete")
@@ -43,7 +51,7 @@ public class ProductController {
         }
     }
 
-    @PutMapping("/update")
+    @PutMapping("/update/{id}")
     public ResponseEntity<String> updateProduct(@PathVariable Long id,
                                                 @RequestBody ProductInDTO productInDTO) {
         try {
@@ -57,10 +65,9 @@ public class ProductController {
     }
 
     @PutMapping("/stockOneDown/{id}")
-    public ResponseEntity<String> stockOneDownProduct(@PathVariable Long id,
-                                                      @PathVariable double changeStock) {
+    public ResponseEntity<String> stockOneDownProduct(@PathVariable Long id) {
         try {
-            productService.stockOneDown(id, changeStock);
+            productService.stockModify(id, -1);
             return ResponseEntity.ok("Stock cambiado correctamente.");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -70,11 +77,11 @@ public class ProductController {
         }
     }
 
-    @PutMapping("/modifyStock/{id}")
+    @PutMapping("/stockModify/{difference}/{id}")
     public ResponseEntity<String> stockModify(@PathVariable Long id,
-                                                      @PathVariable double changeStock) {
+                                              @PathVariable double difference) {
         try {
-            productService.stockOneDown(id, changeStock);
+            productService.stockModify(id, difference);
             return ResponseEntity.ok("Stock cambiado correctamente.");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

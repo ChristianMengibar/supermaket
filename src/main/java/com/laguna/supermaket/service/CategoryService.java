@@ -7,6 +7,7 @@ import com.laguna.supermaket.service.dto.CategoryInDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryService {
@@ -26,6 +27,10 @@ public class CategoryService {
 
     public List<Category> findAll(){
         return this.categoryRepository.findAll();
+    }
+
+    public Optional <Category> findByCategoryId(Long id) {
+        return categoryRepository.findById(id);
     }
 
     public void deleteCategory(CategoryInDTO categoryInDTO){
