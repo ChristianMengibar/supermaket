@@ -52,4 +52,10 @@ public class TicketController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteTicket(@RequestBody Ticket ticket) {
+        ticketService.deleteTicket(ticket);
+        return ResponseEntity.ok("Ticket eliminado correctamente.");
+    }
 }

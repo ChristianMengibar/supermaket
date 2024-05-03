@@ -31,14 +31,14 @@ public class TicketService {
 
     public Ticket createTicket(Ticket ticket) {
         if (ticket == null) {
-            throw new IllegalArgumentException("Ticket cannot be null");
+            throw new IllegalArgumentException("No puede ser nulo.");
         }
         return ticketRepository.save(ticket);
     }
 
     public Ticket editTicket(Long id, Ticket ticket) {
         if (ticket == null) {
-            throw new IllegalArgumentException("Ticket cannot be null");
+            throw new IllegalArgumentException("No puede ser nulo.");
         }
 
         Optional<Ticket> existingTicketOptional = ticketRepository.findById(id);
@@ -54,4 +54,12 @@ public class TicketService {
 
         return ticketRepository.save(existingTicket);
     }
+
+    public void deleteTicket(Ticket ticket) {
+        if (ticket == null || ticket.getId() == null || !ticketRepository.existsById(ticket.getId())) {
+            throw new IllegalArgumentException("El ticket no existe");
+        }
+        ticketRepository.delete(ticket);
+    }
+
 }
