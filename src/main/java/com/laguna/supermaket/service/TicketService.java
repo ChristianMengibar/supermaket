@@ -35,4 +35,23 @@ public class TicketService {
         }
         return ticketRepository.save(ticket);
     }
+
+    public Ticket editTicket(Long id, Ticket ticket) {
+        if (ticket == null) {
+            throw new IllegalArgumentException("Ticket cannot be null");
+        }
+
+        Optional<Ticket> existingTicketOptional = ticketRepository.findById(id);
+        if (!existingTicketOptional.isPresent()) {
+            return null;
+        }
+
+        Ticket existingTicket = existingTicketOptional.get();
+        existingTicket.setOpenDate(ticket.getOpenDate());
+        existingTicket.setCloseDate(ticket.getCloseDate());
+        existingTicket.setLine(ticket.getLine());
+        existingTicket.setTotal(ticket.getTotal());
+
+        return ticketRepository.save(existingTicket);
+    }
 }

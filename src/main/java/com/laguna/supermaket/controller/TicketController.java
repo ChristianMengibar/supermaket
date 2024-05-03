@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-//Camino hacia el controlador
 @RequestMapping("/ticket")
 public class TicketController {
 
@@ -41,6 +40,16 @@ public class TicketController {
             return ResponseEntity.status(HttpStatus.CREATED).body(createdTicket);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<Ticket> editTicket(@PathVariable Long id, @RequestBody Ticket ticket) {
+        Ticket editedTicket = ticketService.editTicket(id, ticket);
+        if (editedTicket != null) {
+            return ResponseEntity.ok(editedTicket);
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 }
