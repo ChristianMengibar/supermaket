@@ -21,11 +21,6 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @PostMapping("/create") //Crear elementos
-    public Product createProduct(@RequestBody ProductInDTO productInDTO) {
-        return this.productService.createProduct(productInDTO);
-    }
-
     @GetMapping("/all") //Buscar todos los productos
     public List<Product> findAll() {
         return this.productService.findAll();
@@ -38,17 +33,9 @@ public class ProductController {
         return product.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteProduct(@RequestBody ProductInDTO productInDTO) {
-        //Utilizamos el try catch para ver si hay algun problema al eliminar el producto que nos
-        //muestre el mensaje de si se ha eliminado o si no se ha eliminado por algun error.
-        try {
-            this.productService.deleteProduct(productInDTO);
-            return ResponseEntity.ok("Product borrado");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("ERROR al borrar el producto: " + e.getMessage());
-        }
+    @PostMapping("/create") //Crear elementos
+    public Product createProduct(@RequestBody ProductInDTO productInDTO) {
+        return this.productService.createProduct(productInDTO);
     }
 
     @PutMapping("/update/{id}")
@@ -61,6 +48,19 @@ public class ProductController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error al actualizar el producto: " + e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteProduct(@RequestBody ProductInDTO productInDTO) {
+        //Utilizamos el try catch para ver si hay algun problema al eliminar el producto que nos
+        //muestre el mensaje de si se ha eliminado o si no se ha eliminado por algun error.
+        try {
+            this.productService.deleteProduct(productInDTO);
+            return ResponseEntity.ok("Product borrado");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("ERROR al borrar el producto: " + e.getMessage());
         }
     }
 
