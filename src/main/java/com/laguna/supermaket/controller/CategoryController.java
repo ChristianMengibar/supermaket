@@ -20,16 +20,6 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @PostMapping
-    public Category createCategory(@RequestBody CategoryInDTO categoryInDTO) {
-        return categoryService.createCategory(categoryInDTO);
-    }
-
-    @GetMapping("/all")
-    public List<Category> findAll(){
-        return this.categoryService.findAll();
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<Category> findByCategoryId(@PathVariable Long id) {
         Optional<Category> category = categoryService.findByCategoryId(id);
@@ -37,15 +27,14 @@ public class CategoryController {
         return category.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteCategory(@RequestBody CategoryInDTO categoryInDTO) {
-        try {
-            this.categoryService.deleteCategory(categoryInDTO);
-            return ResponseEntity.ok("Categoria borrada");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("ERROR al borrar la categoria: " + e.getMessage());
-        }
+    @GetMapping("/all")
+    public List<Category> findAll() {
+        return this.categoryService.findAll();
+    }
+
+    @PostMapping
+    public Category createCategory(@RequestBody CategoryInDTO categoryInDTO) {
+        return categoryService.createCategory(categoryInDTO);
     }
 
     @PutMapping("/update/{id}")
@@ -57,6 +46,17 @@ public class CategoryController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("ERROR al actualizar la categoria: " + e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteCategory(@RequestBody CategoryInDTO categoryInDTO) {
+        try {
+            this.categoryService.deleteCategory(categoryInDTO);
+            return ResponseEntity.ok("Categoria borrada");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("ERROR al borrar la categoria: " + e.getMessage());
         }
     }
 }

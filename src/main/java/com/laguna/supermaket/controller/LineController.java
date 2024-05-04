@@ -2,11 +2,10 @@ package com.laguna.supermaket.controller;
 
 import com.laguna.supermaket.persistence.entity.Line;
 import com.laguna.supermaket.service.LineService;
+import com.laguna.supermaket.service.dto.LineInDTO;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,15 +20,30 @@ public class LineController {
         this.lineService = lineService;
     }
 
-    @GetMapping("/all")
-    public List<Line> findAll() {
-        return lineService.findAll();
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<Line> findById(@PathVariable Long id) {
         Optional<Line> line = lineService.findById(id);
         return line.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/all")
+    public List<Line> findAll() {
+        return lineService.findAll();
+    }
+
+    @PostMapping("/create")
+    public Line createLine(@RequestBody LineInDTO lineInDTO) {
+        return lineService.createLine(lineInDTO);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<String> updateLine(@PathVariable Long id, @RequestBody LineInDTO lineInDTO) {
+        try {
+            lineService.updateLine(id, lineInDTO);
+            return ResponseEntity.ok("Line actualizado.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al actualizar. " + e.getMessage());
+        }
+    }
 }

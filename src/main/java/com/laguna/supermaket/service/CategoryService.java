@@ -20,26 +20,26 @@ public class CategoryService {
         this.mapper = mapper;
     }
 
+    public Optional<Category> findByCategoryId(Long id) {
+        return categoryRepository.findById(id);
+    }
+
+    public List<Category> findAll() {
+        return this.categoryRepository.findAll();
+    }
+
     public Category createCategory(CategoryInDTO categoryInDTO) {
         Category category = mapper.map(categoryInDTO);
         return this.categoryRepository.save(category);
     }
 
-    public List<Category> findAll(){
-        return this.categoryRepository.findAll();
-    }
-
-    public Optional <Category> findByCategoryId(Long id) {
-        return categoryRepository.findById(id);
-    }
-
-    public void deleteCategory(CategoryInDTO categoryInDTO){
-        Category category = mapper.map(categoryInDTO);
-        this.categoryRepository.delete(category);
-    }
-
-    public void updateCategory(Long id, CategoryInDTO categoryInDTO){
+    public void updateCategory(Long id, CategoryInDTO categoryInDTO) {
         Category category = mapper.map(categoryInDTO);
         this.categoryRepository.save(category);
+    }
+
+    public void deleteCategory(CategoryInDTO categoryInDTO) {
+        Category category = mapper.map(categoryInDTO);
+        this.categoryRepository.delete(category);
     }
 }
