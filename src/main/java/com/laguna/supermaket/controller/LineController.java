@@ -46,4 +46,15 @@ public class LineController {
                     .body("Error al actualizar. " + e.getMessage());
         }
     }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteLine(@RequestBody LineInDTO lineInDTO) {
+        try {
+            lineService.deleteLine(lineInDTO);
+            return ResponseEntity.ok("Line borrada.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al borrar." + e.getMessage());
+        }
+    }
 }

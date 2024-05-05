@@ -34,9 +34,13 @@ public class LineService {
         return this.lineRepository.save(line);
     }
 
-    public void updateLine(Long id , LineInDTO lineInDTO) {
+    public void updateLine(Long id, LineInDTO lineInDTO) {
         Line line = mapper.map(lineInDTO);
         this.lineRepository.save(line);
     }
 
+    public void deleteLine(LineInDTO lineInDTO) {
+        Line line = mapper.map(lineInDTO);
+        this.lineRepository.delete(line);
+    }
 }
