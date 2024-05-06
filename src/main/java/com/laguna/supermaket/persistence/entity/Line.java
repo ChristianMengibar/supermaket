@@ -1,9 +1,6 @@
 package com.laguna.supermaket.persistence.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -14,8 +11,10 @@ public class Line {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String product;
-    private double cuantity;
+    private double quantity;
     private double price;
     private double total;
+    @ManyToOne
+    private Ticket ticket;
 
 }

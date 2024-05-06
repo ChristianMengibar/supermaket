@@ -5,12 +5,13 @@ import com.laguna.supermaket.service.dto.LineInDTO;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LineInDTOToTask implements IMapper<LineInDTO, Line>{
+public class LineInDTOToTask implements IMapper<LineInDTO, Line> {
     @Override
     public Line map(LineInDTO in) {
         Line line = new Line();
         line.setProduct(in.getProduct());
-        line.setCuantity(in.getCuantity());
+        line.setQuantity(in.getQuantity());
+        line.setTicket(in.getTicket());
         return line;
     }
 }
