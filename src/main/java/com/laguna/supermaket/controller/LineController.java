@@ -2,7 +2,7 @@ package com.laguna.supermaket.controller;
 
 import com.laguna.supermaket.persistence.entity.Line;
 import com.laguna.supermaket.service.LineService;
-import com.laguna.supermaket.service.dto.LineInDTO;
+import com.laguna.supermaket.service.dto.LineInDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,12 +32,12 @@ public class LineController {
     }
 
     @PostMapping("/create")
-    public Line createLine(@RequestBody LineInDTO lineInDTO) {
+    public Line createLine(@RequestBody LineInDto lineInDTO) {
         return lineService.createLine(lineInDTO);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateLine(@PathVariable Long id, @RequestBody LineInDTO lineInDTO) {
+    public ResponseEntity<String> updateLine(@PathVariable Long id, @RequestBody LineInDto lineInDTO) {
         try {
             lineService.updateLine(id, lineInDTO);
             return ResponseEntity.ok("Line actualizado.");
@@ -48,7 +48,7 @@ public class LineController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteLine(@RequestBody LineInDTO lineInDTO) {
+    public ResponseEntity<String> deleteLine(@RequestBody LineInDto lineInDTO) {
         try {
             lineService.deleteLine(lineInDTO);
             return ResponseEntity.ok("Line borrada.");

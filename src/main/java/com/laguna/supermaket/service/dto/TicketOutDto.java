@@ -1,17 +1,16 @@
 package com.laguna.supermaket.service.dto;
 
-import jakarta.persistence.Column;
+import com.laguna.supermaket.persistence.entity.Line;
 import lombok.Data;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
-public class TicketInDTO {
-
-    @Setter
+public class TicketOutDto {
     private Long id;
     private LocalDateTime openDate;
-    @Column(nullable = true)
     private LocalDateTime closeDate;
+    private List<Line> line;
+    private double total;
 }

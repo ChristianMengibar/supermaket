@@ -2,7 +2,7 @@ package com.laguna.supermaket.controller;
 
 import com.laguna.supermaket.persistence.entity.Product;
 import com.laguna.supermaket.service.ProductService;
-import com.laguna.supermaket.service.dto.ProductInDTO;
+import com.laguna.supermaket.service.dto.ProductInDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,13 +34,13 @@ public class ProductController {
     }
 
     @PostMapping("/create") //Crear elementos
-    public Product createProduct(@RequestBody ProductInDTO productInDTO) {
+    public Product createProduct(@RequestBody ProductInDto productInDTO) {
         return this.productService.createProduct(productInDTO);
     }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<String> updateProduct(@PathVariable Long id,
-                                                @RequestBody ProductInDTO productInDTO) {
+                                                @RequestBody ProductInDto productInDTO) {
         try {
             productInDTO.setId(id);
             this.productService.updateProduct(productInDTO);
@@ -52,7 +52,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteProduct(@RequestBody ProductInDTO productInDTO) {
+    public ResponseEntity<String> deleteProduct(@RequestBody ProductInDto productInDTO) {
         //Utilizamos el try catch para ver si hay algun problema al eliminar el producto que nos
         //muestre el mensaje de si se ha eliminado o si no se ha eliminado por algun error.
         try {

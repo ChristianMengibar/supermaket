@@ -2,7 +2,7 @@ package com.laguna.supermaket.controller;
 
 import com.laguna.supermaket.persistence.entity.Category;
 import com.laguna.supermaket.service.CategoryService;
-import com.laguna.supermaket.service.dto.CategoryInDTO;
+import com.laguna.supermaket.service.dto.CategoryInDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,13 +33,13 @@ public class CategoryController {
     }
 
     @PostMapping
-    public Category createCategory(@RequestBody CategoryInDTO categoryInDTO) {
+    public Category createCategory(@RequestBody CategoryInDto categoryInDTO) {
         return categoryService.createCategory(categoryInDTO);
     }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<String> updateCategory(@PathVariable Long id,
-                                                 @RequestBody CategoryInDTO categoryInDTO) {
+                                                 @RequestBody CategoryInDto categoryInDTO) {
         try {
             this.categoryService.updateCategory(id, categoryInDTO);
             return ResponseEntity.ok("Categoria borrada");
@@ -50,7 +50,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteCategory(@RequestBody CategoryInDTO categoryInDTO) {
+    public ResponseEntity<String> deleteCategory(@RequestBody CategoryInDto categoryInDTO) {
         try {
             this.categoryService.deleteCategory(categoryInDTO);
             return ResponseEntity.ok("Categoria borrada");

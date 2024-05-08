@@ -23,5 +23,4 @@ public class Product {
     private LocalDateTime createdAt;
     @LastModifiedDate
     private LocalDateTime updatedAt;
-    private LocalDateTime eta;
 }

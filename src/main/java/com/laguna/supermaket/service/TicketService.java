@@ -1,24 +1,21 @@
 package com.laguna.supermaket.service;
 
-import com.laguna.supermaket.mapper.TicketInDTOToTask;
+import com.laguna.supermaket.mapper.TicketInDtoMapper;
 import com.laguna.supermaket.persistence.entity.Ticket;
 import com.laguna.supermaket.persistence.repository.TicketRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class TicketService {
 
     private final TicketRepository ticketRepository;
 
-    private final TicketInDTOToTask ticketInDTOToTask;
-
-    public TicketService(TicketRepository ticketRepository, TicketInDTOToTask ticketInDTOToTask) {
-        this.ticketRepository = ticketRepository;
-        this.ticketInDTOToTask = ticketInDTOToTask;
-    }
+    private final TicketInDtoMapper mapper;
 
     public List<Ticket> getAll() {
         return ticketRepository.findAll();
@@ -42,7 +39,7 @@ public class TicketService {
         }
 
         Optional<Ticket> existingTicketOptional = ticketRepository.findById(id);
-        if (!existingTicketOptional.isPresent()) {
+        if (existingTicketOptional.isEmpty()) {
             return null;
         }
 
