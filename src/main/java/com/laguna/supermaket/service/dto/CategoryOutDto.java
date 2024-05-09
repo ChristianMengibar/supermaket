@@ -1,5 +1,6 @@
 package com.laguna.supermaket.service.dto;
 
+import com.laguna.supermaket.persistence.entity.Category;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -13,4 +14,5 @@ public class CategoryOutDto {
     private String description;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
 }

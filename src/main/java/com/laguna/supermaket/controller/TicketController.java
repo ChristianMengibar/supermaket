@@ -18,44 +18,4 @@ public class TicketController {
         this.ticketService = ticketService;
     }
 
-    @GetMapping("/all")
-    public List<Ticket> getAllTickets() {
-        return ticketService.getAll();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Ticket> getTicketById(@PathVariable Long id) {
-        try {
-            Ticket ticket = ticketService.getById(id);
-            return ResponseEntity.ok(ticket);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-    }
-
-    @PostMapping("/create")
-    public ResponseEntity<Ticket> createTicket(@RequestBody Ticket ticket) {
-        try {
-            Ticket createdTicket = ticketService.createTicket(ticket);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdTicket);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
-
-    @PutMapping("/edit/{id}")
-    public ResponseEntity<Ticket> editTicket(@PathVariable Long id, @RequestBody Ticket ticket) {
-        Ticket editedTicket = ticketService.editTicket(id, ticket);
-        if (editedTicket != null) {
-            return ResponseEntity.ok(editedTicket);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteTicket(@RequestBody Ticket ticket) {
-        ticketService.deleteTicket(ticket);
-        return ResponseEntity.ok("Ticket eliminado correctamente.");
-    }
 }

@@ -3,13 +3,13 @@ package com.laguna.supermaket.service;
 import com.laguna.supermaket.mapper.CategoryInDtoMapper;
 import com.laguna.supermaket.persistence.entity.Category;
 import com.laguna.supermaket.persistence.repository.CategoryRepository;
-import com.laguna.supermaket.service.dto.CategoryInDto;
 import com.laguna.supermaket.service.dto.CategoryOutDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -18,27 +18,21 @@ public class CategoryService {
 
     private final CategoryInDtoMapper mapper;
 
-    public CategoryOutDto findByCategoryId(Long id) {
-
-        return mapper.categoryToCategoryOutDto(categoryRepository.findById(id));
+    //De Category a DTO de salida.
+    private CategoryOutDto mapToOutDto(Category category) {
+        return mapper.categoryToCategoryOutDto(category);
     }
 
-    public List<Category> findAll() {
-        return this.categoryRepository.findAll();
+    public CategoryOutDto getCategoryById(Long id) {
+        Optional<Category> categoryOptional = categoryRepository.findById(id);
+        return categoryOptional.map(this::mapToOutDto).orElse(null);
     }
 
-    public Category createCategory(CategoryInDto categoryInDTO) {
-        Category category = mapper.categoryInDtoToCategory(categoryInDTO);
-        return this.categoryRepository.save(category);
+    public List<CategoryOutDto> getAllCategories() {
+        List<Category> categories = categoryRepository.findAll();
+        return categories.stream().map(this::mapToOutDto).collect(Collectors.toList());
     }
 
-    public void updateCategory(Long id, CategoryInDto categoryInDTO) {
-        Category category = mapper.categoryInDtoToCategory(categoryInDTO);
-        this.categoryRepository.save(category);
-    }
 
-    public void deleteCategory(CategoryInDto categoryInDTO) {
-        Category category = mapper.categoryInDtoToCategory(categoryInDTO);
-        this.categoryRepository.delete(category);
-    }
+
 }

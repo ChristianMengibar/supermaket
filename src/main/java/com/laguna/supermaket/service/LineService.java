@@ -18,26 +18,5 @@ public class LineService {
 
     private final LineInDtoMapper mapper;
 
-    public Optional<Line> findById(Long id) {
-        return lineRepository.findById(id);
-    }
 
-    public List<Line> findAll() {
-        return lineRepository.findAll();
-    }
-
-    public Line createLine(LineInDto lineInDTO) {
-        Line line = mapper.map(lineInDTO);
-        return this.lineRepository.save(line);
-    }
-
-    public void updateLine(Long id, LineInDto lineInDTO) {
-        Line line = mapper.map(lineInDTO);
-        this.lineRepository.save(line);
-    }
-
-    public void deleteLine(LineInDto lineInDTO) {
-        Line line = mapper.map(lineInDTO);
-        this.lineRepository.delete(line);
-    }
 }
