@@ -18,5 +18,9 @@ public class Ticket {
     private LocalDateTime closeDate;
     @OneToMany
     private List<Line> line;
+    //He tenido que añadir Product para que cuando se añada un producto al ticket me
+    // dejase introducirlo en la clase, ya que sin la List de Product no sabria como hacerlo
+    @OneToMany
+    private List<Product> products;
     private double total;
 }

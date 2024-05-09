@@ -1,6 +1,7 @@
 package com.laguna.supermaket.service;
 
 import com.laguna.supermaket.mapper.TicketInDTOToTask;
+import com.laguna.supermaket.persistence.entity.Product;
 import com.laguna.supermaket.persistence.entity.Ticket;
 import com.laguna.supermaket.persistence.repository.TicketRepository;
 import org.springframework.stereotype.Service;
@@ -71,4 +72,18 @@ public class TicketService {
         return ticketRepository.save(ticket);
     }
 
+    public Ticket addProductToTicket(Long ticketId, Product product) {
+        Ticket ticket = ticketRepository.findById(ticketId)
+                .orElseThrow(() -> new IllegalArgumentException("Ticket no encontrado"));
+
+        if (product.getStock() <= 0) {
+            throw new IllegalArgumentException("El stock del producto será negativo");
+        }
+
+        ticket.getProducts().add(product);
+        product.setStock(product.getStock() - 1);
+        ticketRepository.save(ticket);
+
+        return ticket;
+    }
 }

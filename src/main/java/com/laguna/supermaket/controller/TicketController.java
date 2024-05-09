@@ -1,5 +1,6 @@
 package com.laguna.supermaket.controller;
 
+import com.laguna.supermaket.persistence.entity.Product;
 import com.laguna.supermaket.persistence.entity.Ticket;
 import com.laguna.supermaket.service.TicketService;
 import org.springframework.http.HttpStatus;
@@ -66,6 +67,18 @@ public class TicketController {
             return ResponseEntity.status(HttpStatus.CREATED).body(openedTicket);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build(); //Respuesta vacia con codigo de estado 404
+        }
+    }
+
+    @PostMapping("/{ticketId}/addProduct")
+    public ResponseEntity<Ticket> addProductToTicket(
+            @PathVariable Long ticketId, @RequestBody Product product) {
+        try {
+            Ticket ticket = ticketService.addProductToTicket(ticketId, product);
+            return ResponseEntity.ok(ticket);
+        } catch (IllegalArgumentException e) {
+            //Si algun error devuelve 404 con el badRequest
+            return ResponseEntity.badRequest().body(null);
         }
     }
 }
