@@ -5,6 +5,7 @@ import com.laguna.supermaket.persistence.entity.Ticket;
 import com.laguna.supermaket.persistence.repository.TicketRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,13 +21,13 @@ public class TicketService {
         this.ticketInDTOToTask = ticketInDTOToTask;
     }
 
-    public List<Ticket> getAll() {
-        return ticketRepository.findAll();
-    }
-
     public Ticket getById(Long id) {
         Optional<Ticket> ticketOptional = ticketRepository.findById(id);
         return ticketOptional.orElse(null);
+    }
+
+    public List<Ticket> getAll() {
+        return ticketRepository.findAll();
     }
 
     public Ticket createTicket(Ticket ticket) {
@@ -60,6 +61,14 @@ public class TicketService {
             throw new IllegalArgumentException("El ticket no existe");
         }
         ticketRepository.delete(ticket);
+    }
+
+    public Ticket openTicket() {
+        Ticket ticket = new Ticket();
+        ticket.setOpenDate(LocalDateTime.now());
+
+        // Guardar el ticket en la base de datos
+        return ticketRepository.save(ticket);
     }
 
 }

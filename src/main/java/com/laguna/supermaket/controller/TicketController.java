@@ -18,11 +18,6 @@ public class TicketController {
         this.ticketService = ticketService;
     }
 
-    @GetMapping("/all")
-    public List<Ticket> getAllTickets() {
-        return ticketService.getAll();
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<Ticket> getTicketById(@PathVariable Long id) {
         try {
@@ -31,6 +26,11 @@ public class TicketController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
+    }
+
+    @GetMapping("/all")
+    public List<Ticket> getAllTickets() {
+        return ticketService.getAll();
     }
 
     @PostMapping("/create")
@@ -57,5 +57,15 @@ public class TicketController {
     public ResponseEntity<String> deleteTicket(@RequestBody Ticket ticket) {
         ticketService.deleteTicket(ticket);
         return ResponseEntity.ok("Ticket eliminado correctamente.");
+    }
+
+    @PostMapping("/open")
+    public ResponseEntity<Ticket> openTicket() {
+        try {
+            Ticket openedTicket = ticketService.openTicket();
+            return ResponseEntity.status(HttpStatus.CREATED).body(openedTicket);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build(); //Respuesta vacia con codigo de estado 404
+        }
     }
 }
