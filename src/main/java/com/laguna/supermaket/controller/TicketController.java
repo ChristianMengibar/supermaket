@@ -81,4 +81,18 @@ public class TicketController {
             return ResponseEntity.badRequest().body(null);
         }
     }
+
+    @DeleteMapping("/{ticketId}/removeProduct/{productId}")
+    public ResponseEntity<Ticket> removeProductFromTicket(
+            @PathVariable Long ticketId,
+            @PathVariable Long productId,
+            //Filtrar los productos a eliminar
+            @RequestParam(value = "quantity", required = false, defaultValue = "1") int quantity) {
+        try {
+            Ticket ticket = ticketService.removeProductFromTicket(ticketId, productId, quantity);
+            return ResponseEntity.ok(ticket);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
 }

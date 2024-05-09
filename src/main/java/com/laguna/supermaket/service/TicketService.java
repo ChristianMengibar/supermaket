@@ -86,4 +86,28 @@ public class TicketService {
 
         return ticket;
     }
+
+    public Ticket removeProductFromTicket(Long ticketId, Long productId, int quantity) {
+        Ticket ticket = ticketRepository.findById(ticketId)
+                .orElseThrow(() -> new IllegalArgumentException("Ticket no encontrado"));
+
+        // Buscamos el producto en el ticket
+        Optional<Product> optionalProduct = ticket.getProducts().stream()
+                .filter(product -> product.getId().equals(productId))
+                .findFirst();
+
+        if (optionalProduct.isPresent()) {
+            Product product = optionalProduct.get();
+
+            if (quantity >= product.getStock()) {
+                ticket.getProducts().remove(product);
+            } else {
+                product.setStock(product.getStock() - quantity);
+            }
+            ticketRepository.save(ticket);
+        } else {
+            throw new IllegalArgumentException("Producto no encontrado.");
+        }
+        return ticket;
+    }
 }
