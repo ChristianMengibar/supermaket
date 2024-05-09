@@ -11,11 +11,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class ProductService {
 
     private final ProductRepository productRepository;
 
     private final ProductInDtoMapper mapper;
 
+    public ProductService(ProductRepository productRepository, ProductInDtoMapper mapper) {
+        this.productRepository = productRepository;
+        this.mapper = mapper;
+    }
 }

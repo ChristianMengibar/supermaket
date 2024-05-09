@@ -10,11 +10,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class TicketService {
 
     private final TicketRepository ticketRepository;
 
     private final TicketInDtoMapper mapper;
 
+    public TicketService(TicketRepository ticketRepository, TicketInDtoMapper mapper) {
+        this.ticketRepository = ticketRepository;
+        this.mapper = mapper;
+    }
 }

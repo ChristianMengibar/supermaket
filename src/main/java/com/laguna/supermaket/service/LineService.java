@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class LineService {
 
     private final LineRepository lineRepository;
@@ -19,4 +18,8 @@ public class LineService {
     private final LineInDtoMapper mapper;
 
 
+    public LineService(LineRepository lineRepository, LineInDtoMapper mapper) {
+        this.lineRepository = lineRepository;
+        this.mapper = mapper;
+    }
 }

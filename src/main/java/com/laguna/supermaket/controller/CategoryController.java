@@ -1,7 +1,10 @@
 package com.laguna.supermaket.controller;
 
 import com.laguna.supermaket.service.CategoryService;
+import com.laguna.supermaket.service.dto.CategoryOutDto;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/category")
@@ -13,4 +16,13 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
+    @GetMapping("/{id}")
+    public CategoryOutDto getCategoryById(@PathVariable Long id) {
+        return categoryService.getCategoryById(id);
+    }
+
+    @GetMapping("/all")
+    public List<CategoryOutDto> getAllCategories() {
+        return categoryService.getAllCategories();
+    }
 }
