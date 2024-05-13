@@ -1,5 +1,6 @@
 package com.laguna.supermaket.controller;
 
+import com.laguna.supermaket.persistence.entity.Product;
 import com.laguna.supermaket.persistence.entity.Ticket;
 import com.laguna.supermaket.service.TicketService;
 import org.springframework.http.HttpStatus;

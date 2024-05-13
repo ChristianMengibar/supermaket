@@ -1,13 +1,8 @@
 package com.laguna.supermaket.service;
 
 import com.laguna.supermaket.mapper.TicketInDtoMapper;
-import com.laguna.supermaket.persistence.entity.Ticket;
 import com.laguna.supermaket.persistence.repository.TicketRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TicketService {
@@ -20,4 +15,5 @@ public class TicketService {
         this.ticketRepository = ticketRepository;
         this.mapper = mapper;
     }
+
 }
